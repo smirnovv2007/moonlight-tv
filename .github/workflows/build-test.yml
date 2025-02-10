@@ -41,7 +41,9 @@ jobs:
       - name: Build
         working-directory: ${{github.workspace}}/build
         shell: bash
-        run: cmake --build . --config $BUILD_TYPE
+        run: |
+          cmake --build . --config $BUILD_TYPE
+          cpack
 
       - name: Test
         working-directory: ${{github.workspace}}/build
@@ -50,8 +52,8 @@ jobs:
 
       - uses: actions/upload-artifact@v4
         with:
-          name: linux-desktop-${{ env.SHORT_SHA }}
-          path: build/*
+          name: linux-amd64
+          path: build/*.deb
 
   build-webos:
     name: Build (webOS)
